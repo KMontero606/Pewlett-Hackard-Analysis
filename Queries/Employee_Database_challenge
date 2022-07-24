@@ -12,8 +12,6 @@ ON (e.emp_no = te.emp_no)
 WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
 ORDER BY te.emp_no ASC;
 
-SELECT * FROM retirement_titles;
-
 -- Use Dictinct with Orderby to remove duplicate rows
 SELECT DISTINCT ON (emp_no) rt.emp_no,
 rt.first_name,
@@ -25,7 +23,7 @@ FROM retirement_titles AS rt
 WHERE (rt.to_date = '9999-01-01')
 ORDER BY rt.emp_no, rt.to_date DESC;
 
--- Write another query o retrieve the number of employees by their most recent job title who are about to retire
+-- Write another query to retrieve the number of employees by their most recent job title who are about to retire
 SELECT COUNT(u.emp_no), u.title
 INTO retiring_titles
 FROM unique_titles AS u
@@ -49,3 +47,15 @@ ON (e.emp_no = te.emp_no)
 WHERE (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31') 
 AND (de.to_date = '9999-01-01')
 ORDER BY e.emp_no, de.to_date DESC;
+
+-- Write another query to retrieve the number of employees by their most recent job title who are eligible for mentorship
+SELECT COUNT(me.emp_no), me.title
+FROM mentorship_eligibility AS me
+GROUP BY me.title
+ORDER BY me.count DESC;
+
+-- Check the table
+SELECT * FROM unique_titles;
+
+-- Count the amount of employees
+SELECT COUNT(emp_no) FROM mentorship_eligibility;
